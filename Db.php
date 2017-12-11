@@ -34,7 +34,6 @@ class Db
 
     public function describe($table)
     {
-        // TODO: экранировать запросы
         $query = "DESCRIBE $table;";
 
         $prepquery = $this->pdo->prepare($query);
