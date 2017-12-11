@@ -63,18 +63,15 @@ class Db
         }
 
         if ($key) {
-            $query .= "PRIMARY KEY($key)";
+            $query .= ", PRIMARY KEY($key)";
         }
 
         $query .= ') ENGINE='.$this->engine.' DEFAULT CHARSET='.$this->charset.';';
 
-        var_dump($columns);
-        var_dump($query);
-
         $prepquery = $this->pdo->prepare($query);
-        // try {
+        try {
             $prepquery->execute();     
-        // } catch(PDOException $e) {}       
+        } catch(PDOException $e) {}       
     }
 
     public function dropTable($table)

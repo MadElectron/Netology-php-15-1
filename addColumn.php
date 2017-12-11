@@ -1,5 +1,4 @@
 <?php 
-    require_once 'Db.php';
     require_once 'Controller/AddColumnController.php';
 ?>
 <!DOCTYPE html>

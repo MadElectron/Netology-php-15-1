@@ -1,10 +1,11 @@
 <?php 
-    
-        // Home database
+    require_once __DIR__.'/../Db.php';
+
+    // Home database
     $host = 'localhost';
     $dbname = 'netology';
     $user = 'root';
-    $pass = 'rjycjhwbev77'; // WOrk pass
+    $pass = 'BJz5c8PI';
     $options = [
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, 
     ];
