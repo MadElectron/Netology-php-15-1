@@ -1,5 +1,10 @@
 <?php 
-    use \Controller\IndexController;
+    require_once 'app.php';
+
+    use \Controller\IndexController as IndexController;
+
+    $controller = new IndexController($pdo);
+    $db = $controller->getDb();
  ?>
 <!DOCTYPE html>
 <html>
