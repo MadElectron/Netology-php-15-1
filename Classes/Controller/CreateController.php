@@ -1,30 +1,54 @@
 <?php 
     
-    require_once 'MainController.php';
+namespace Controller;
 
-    $columnsCount = 4;
-    $isCreated = $_POST['create'] ?? '';
-    $tabName = $_POST['table_name'] ?? '';
+use \Controller\Controller;
 
-    if($isCreated && $tabName) {
-        $columns = [];
+class CreateController extends Controller 
+{
+    private $columnsCount = 4;
 
-        for($i = 0; $i < $columnsCount; $i++) {
-            $columnName = $_POST['name'.$i] ?? '';
+    public function __construct($pdo)
+    {
+        parent::__construct($pdo);
 
-            if($columnName) {
-                $columns[] = [
-                    'name' => $columnName,
-                    'key' => $_POST['key'.$i] ?? '',
-                    'type' => $_POST['type'.$i] ?? '',
-                    'value' => $_POST['type_value'.$i] ?? '',
-                    'nullable' => $_POST['nullable'.$i] ?? '',
-                ];
+        $columnsCount = 4;
+        $isCreated = $_POST['create'] ?? '';
+        $tabName = $_POST['table_name'] ?? '';
+
+        if($isCreated && $tabName) {
+            $columns = [];
+
+            for($i = 0; $i < $columnsCount; $i++) {
+                $columnName = $_POST['name'.$i] ?? '';
+
+                if($columnName) {
+                    $columns[] = [
+                        'name' => $columnName,
+                        'key' => $_POST['key'.$i] ?? '',
+                        'type' => $_POST['type'.$i] ?? '',
+                        'value' => $_POST['type_value'.$i] ?? '',
+                        'nullable' => $_POST['nullable'.$i] ?? '',
+                    ];
+                }
+            }
+
+            if($columns) {
+                $this->db->createTable($tabName, $columns);
+                header("Location:index.php");
             }
         }
-
-        if($columns) {
-            $db->createTable($tabName, $columns);
-            header("Location:index.php");
-        }
     }
+
+    public function getColumnsCount()
+    {
+        return $this->columnsCount;
+    }
+
+    public function setColumnsCount($columnsCount)
+    {
+        $this->columnsCount = $columnsCount;
+
+        return $this;
+    }    
+}

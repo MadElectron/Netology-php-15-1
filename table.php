@@ -1,5 +1,5 @@
 <?php 
-    require_once 'Controller/TableController.php';
+    require_once 'app.php';
  ?>
 <!DOCTYPE html>
 <html>
@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="container">
-        
+        <?php $tabName = $_GET['table'] ?? ''; ?>
         <h1><?= $tabName ?></h1>
         <p><a href="addColumn.php?table=<?= $tabName ?>">Добавить столбец</a></p>
         <table>

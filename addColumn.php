@@ -1,5 +1,5 @@
 <?php 
-    require_once 'Controller/AddColumnController.php';
+    require_once 'app.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -11,6 +11,7 @@
 </head>
 <body>
     <div class="container">
+        <?php $tabName = $controller->getTabName(); ?>
         <h1>Добавить столбец в таблицу "<?= $tabName ?>"</h1>
 
         <form action="" method="post" accept-charset="utf-8">

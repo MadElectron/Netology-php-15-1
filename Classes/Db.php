@@ -12,6 +12,14 @@ class Db
     private $engine = 'InnoDB';
     private $pdo;
 
+    private function checkAllowedTypes($type)
+    {
+        $types = call_user_func_array('array_merge', $this->allowedTypes);
+
+        if(!in_array($type, $types))
+            return;
+    }
+
     public function __construct(PDO $pdo)
     {   
         $this->pdo = $pdo;
@@ -33,8 +41,9 @@ class Db
     }
 
     public function describe($table)
-    {
-        $query = "DESCRIBE $table;";
+    {   
+        // $table = $this->pdo->quote($table);
+        $query = "DESCRIBE `$table`";
 
         $prepquery = $this->pdo->prepare($query);
         $prepquery->execute();
@@ -44,7 +53,7 @@ class Db
 
     public function createTable($table, $columns)
     {
-        $query = "CREATE TABLE $table (";
+        $query = "CREATE TABLE `$table` (";
         $key = 0;
 
         foreach ($columns as $index =>$column) {
@@ -62,7 +71,7 @@ class Db
         }
 
         if ($key) {
-            $query .= ", PRIMARY KEY($key)";
+            $query .= ", PRIMARY KEY(`$key`)";
         }
 
         $query .= ') ENGINE='.$this->engine.' DEFAULT CHARSET='.$this->charset.';';
@@ -75,7 +84,7 @@ class Db
 
     public function dropTable($table)
     {
-        $query = "DROP TABLE IF EXISTS $table;";
+        $query = "DROP TABLE IF EXISTS `$table`;";
 
         $prepquery = $this->pdo->prepare($query);
         $prepquery->execute();
@@ -83,7 +92,7 @@ class Db
 
     public function renameTable($table, $newName)
     {
-        $query = "ALTER TABLE $table RENAME $newName;";
+        $query = "ALTER TABLE `$table` RENAME `$newName`;";
 
         $prepquery = $this->pdo->prepare($query);
         $prepquery->execute();
@@ -91,13 +100,15 @@ class Db
 
     public function addColumn($table, $column, $type, $value, $nullable)
     {   
+        $this->checkAllowedTypes($type);
+
         $null = $nullable ? 'NULL' : 'NOT NULL';
         if($value) {
             $type .= "($value)";
         }
 
-        $query = "ALTER TABLE $table 
-            ADD $column $type $null
+        $query = "ALTER TABLE `$table` 
+            ADD `$column` $type $null
         ;";   
 
         $prepquery = $this->pdo->prepare($query);
@@ -109,7 +120,7 @@ class Db
 
     public function dropColumn($table, $column)
     {
-        $query = "ALTER TABLE $table DROP COLUMN $column;";
+        $query = "ALTER TABLE `$table` DROP COLUMN `$column`;";
 
         $prepquery = $this->pdo->prepare($query);
         $prepquery->execute();
@@ -124,8 +135,8 @@ class Db
             }
         }
 
-        $query = "ALTER TABLE $table 
-            CHANGE $column $newName $type
+        $query = "ALTER TABLE `$table` 
+            CHANGE `$column` `$newName` $type
         ;";
 
         $prepquery = $this->pdo->prepare($query);
@@ -134,6 +145,8 @@ class Db
 
     public function changeColumnType($table, $column, $newType, $value, $nullable)
     {   
+        $this->checkAllowedTypes($newType);
+
         $null = $nullable ? 'NULL' : 'NOT NULL';
         if($value) {
             $newType .= "($value)";

@@ -4,8 +4,8 @@ namespace Controller;
 
 use Db;
 
-class Controller{
-    
+class Controller
+{
     protected $allowedActions = ['alter', 'drop'];
     protected $db;
 

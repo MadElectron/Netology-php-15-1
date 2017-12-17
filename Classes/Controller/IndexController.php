@@ -1,11 +1,12 @@
 <?php 
 
-
 namespace Controller;
 
 use \Controller\Controller;
 
-class IndexController extends Controller {
+class IndexController extends Controller 
+{
+
     public function __construct($pdo)
     {
         parent::__construct($pdo);

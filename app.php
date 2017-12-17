@@ -10,6 +10,8 @@
     $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
     $pdo = new PDO($dsn, $user, $pass, $options);
 
-    // require_once 'main.php';
+    $factory = new ControllerFactory($pdo);
+    $controller = $factory->createController($_SERVER['PHP_SELF']);
+    $db = $controller->getDb();
 
 
