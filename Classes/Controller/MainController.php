@@ -1,5 +1,20 @@
 <?php 
-    require_once __DIR__.'/../Db.php';
+    
+namespace Controller;
+
+use Db;
+
+class MainController{
+    
+    private $allowedActions = ['alter', 'drop'];
+    private $pdo;
+    private $db;
+
+    public function __construct__(PDO $pdo)
+    {
+        $db = new Db($pdo);
+    }
+}
 
     // Home database
     $host = 'localhost';
@@ -10,9 +25,9 @@
         PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION, 
     ];
 
-    $allowedActions = ['alter', 'drop'];
 
     $dsn = "mysql:host=$host;dbname=$dbname;charset=utf8";
     $pdo = new PDO($dsn, $user, $pass, $options);
 
-    $db = new Db($pdo);
+    
+

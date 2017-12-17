@@ -1,6 +1,8 @@
 <?php 
 
-    require_once 'MainController.php';
+    namespace Controller;
+
+    use MainController;
 
     $droppedTable = $_POST['drop'] ?? '';
     $renamedTable = $_POST['rename'] ?? '';

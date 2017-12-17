@@ -1,6 +1,7 @@
 <?php 
-    
-    require_once 'MainController.php';
+    namespace Controller;
+
+    MainController;
 
     $tabName = $_GET['table'] ?? '';
 

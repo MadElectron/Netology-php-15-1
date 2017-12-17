@@ -1,5 +1,5 @@
 <?php 
-    require_once 'Controller/IndexController.php';
+    use \Controller\IndexController;
  ?>
 <!DOCTYPE html>
 <html>
